@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/task")
@@ -24,7 +25,8 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.GET, params = "taskId")
     public TaskDto getTask(@RequestParam long taskId) {
-        return taskMapper.mapToTaskDto(service.getTaskById(taskId).orElse(null));
+        Task task = service.getTaskById(taskId);
+        return (task == null) ? null : taskMapper.mapToTaskDto(task);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
