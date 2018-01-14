@@ -1,14 +1,15 @@
 package com.crud.tasks.controller;
 
-import com.crud.tasks.domain.Task;
 import com.crud.tasks.domain.TaskDto;
 import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/task")
@@ -24,9 +25,8 @@ public class TaskController {
     }
 
     @RequestMapping(method = RequestMethod.GET, params = "taskId")
-    public TaskDto getTask(@RequestParam long taskId) {
-        Task task = service.getTaskById(taskId);
-        return (task == null) ? null : taskMapper.mapToTaskDto(task);
+    public TaskDto getTask(@RequestParam long taskId) throws TaskNotFoundException {
+        return taskMapper.mapToTaskDto(service.getTaskById(taskId).orElseThrow(TaskNotFoundException::new));
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
