@@ -32,6 +32,7 @@ public class TaskController {
     @RequestMapping(method = RequestMethod.DELETE)
     public void deleteTask(@RequestParam Long taskId) {
         service.deleteTask(taskId);
+        //return "";
     }
 
     @RequestMapping(method = RequestMethod.PUT)
@@ -42,6 +43,7 @@ public class TaskController {
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE)
     public void createTask(@RequestBody TaskDto taskDto) {
         service.saveTask(taskMapper.mapToTask(taskDto));
+        //return "";
     }
 
 
