@@ -94,7 +94,8 @@ public class TrelloClientTest {
 
         URI uri = new URI("http://test.com/cards?key=test&token=test&name=Test%20task&desc=Test%20Description" +
                 "&pos=top&idList=test_id");
-        when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(null);
+
+        //when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(null);
 
         //When
         List<TrelloBoardDto> trelloBoards = trelloClient.getTrelloBoards();
