@@ -47,7 +47,7 @@ public class TrelloMapperTestSuite {
     private boolean listIdenticalToListDto(TrelloList trelloList, TrelloListDto trelloListDto) {
         return Objects.equals(trelloList.getId(), trelloListDto.getId()) &&
                 Objects.equals(trelloList.getName(), trelloListDto.getName()) &&
-                Objects.equals(trelloList.isClosed(), trelloListDto.isClosed());
+                trelloList.isClosed() == trelloListDto.isClosed();
     }
 
     private boolean listsIdenticalToListsDto(List<TrelloList> lists, List<TrelloListDto> listsDto) {
