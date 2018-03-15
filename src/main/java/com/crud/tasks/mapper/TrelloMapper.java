@@ -1,5 +1,6 @@
-package com.crud.tasks.domain;
+package com.crud.tasks.mapper;
 
+import com.crud.tasks.domain.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
