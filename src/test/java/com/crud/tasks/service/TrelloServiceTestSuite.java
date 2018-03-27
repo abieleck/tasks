@@ -70,6 +70,6 @@ public class TrelloServiceTestSuite {
         CreatedTrelloCardDto createdTrelloCard = trelloService.createTrelloCard(trelloCardDto);
         //Then
         assertEquals(createdCard, createdTrelloCard);
-        verify(simpleEmailService, times(1)).send(any(Mail.class));
+        verify(simpleEmailService, times(1)).sendNewTrelloCardMessage(any(Mail.class));
     }
 }

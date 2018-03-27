@@ -22,14 +22,15 @@ public class EmailScheduler {
     @Autowired
     private AdminConfig adminConfig;
 
-    //@Scheduled(fixedDelay = 10000) //(cron = "0 0 10 * * *")
+    @Scheduled(fixedDelay = 10000) //(cron = "0 0 10 * * *")
     public void sendInformationEmail() {
         long size = taskRepository.count();
-        simpleEmailService.send(new Mail(
+        simpleEmailService.sendTaskCountMessage(adminConfig.getAdminMail(), SUBJECT, size);
+        /*simpleEmailService.sendNewTrelloCardMessage(new Mail(
                 adminConfig.getAdminMail(),
                 null,
                 SUBJECT,
                 "Currently in database you got " + size + ((size == 1) ? "task" : "tasks"))
-        );
+        );*/
     }
 }

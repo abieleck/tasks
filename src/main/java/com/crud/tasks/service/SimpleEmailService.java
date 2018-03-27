@@ -11,8 +11,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
-import static java.util.Optional.ofNullable;
-
 @Service
 public class SimpleEmailService {
 
@@ -24,7 +22,7 @@ public class SimpleEmailService {
     @Autowired
     private MailCreatorService mailCreatorService;
 
-    private MimeMessagePreparator createMimeMessage(final Mail mail) {
+    private MimeMessagePreparator createTrelloMimeMessage(final Mail mail) {
         return mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setTo(mail.getMailTo());
@@ -33,10 +31,29 @@ public class SimpleEmailService {
         };
     }
 
-    public void send(final Mail mail) {
+    private MimeMessagePreparator createTaskCountMimeMessage(String mailTo, String subject, long taskCount) {
+        return mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            messageHelper.setTo(mailTo);
+            messageHelper.setSubject(subject);
+            messageHelper.setText(mailCreatorService.buildTaskCountEmail(taskCount), true);
+        };
+    }
+
+    public void sendNewTrelloCardMessage(Mail mail) {
         LOGGER.info("Starting email preparation...");
         try {
-            javaMailSender.send(createMimeMessage(mail));
+            javaMailSender.send(createTrelloMimeMessage(mail));
+            LOGGER.info("Email has been sent");
+        } catch (MailException e) {
+            LOGGER.error("Failed to process mail sending: ", e.getMessage(), e);
+        }
+    }
+
+    public void sendTaskCountMessage(String mailTo, String subject, long taskCount) {
+        LOGGER.info("Starting email preparation...");
+        try {
+            javaMailSender.send(createTaskCountMimeMessage(mailTo, subject, taskCount));
             LOGGER.info("Email has been sent");
         } catch (MailException e) {
             LOGGER.error("Failed to process mail sending: ", e.getMessage(), e);
