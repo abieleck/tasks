@@ -15,6 +15,7 @@ import java.util.List;
 
 @Service
 public class MailCreatorService {
+
     @Autowired
     @Qualifier("templateEngine")
     private TemplateEngine templateEngine;
@@ -40,7 +41,7 @@ public class MailCreatorService {
 
         Context context = new Context();
         context.setVariable("message", message);
-        context.setVariable("tasks_url", "http://localhost:8888/tasks_frontend/old");
+        context.setVariable("tasks_url", adminConfig.getFrontendBaseUrl());
         context.setVariable("button", "Visit website");
         context.setVariable("admin_name", adminConfig.getAdminName());
         context.setVariable("company_name", adminConfig.getCompanyName());
@@ -57,9 +58,9 @@ public class MailCreatorService {
 
     public String buildTaskCountEmail(long taskCount) {
         List<LinkInfo> links = new ArrayList<>();
-        links.add(new LinkInfo("http://localhost:8888/tasks_frontend/old", "Application"));
-        links.add(new LinkInfo("http://localhost:8080/swagger-ui.html", "API documentation"));
-        links.add(new LinkInfo("http://localhost:8080/application/health", "App status info"));
+        links.add(new LinkInfo(adminConfig.getFrontendBaseUrl(), "Application"));
+        links.add(new LinkInfo(adminConfig.getBackendBaseUrl() +  "/swagger-ui.html", "API documentation"));
+        links.add(new LinkInfo(adminConfig.getBackendBaseUrl() +  "/application/health", "App status info"));
 
         Context context = new Context();
         context.setVariable("task_count", taskRepository.count());

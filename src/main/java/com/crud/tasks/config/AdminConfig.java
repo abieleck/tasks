@@ -8,6 +8,12 @@ import org.springframework.stereotype.Component;
 @Getter
 public class AdminConfig {
 
+    @Value("${application.backend.url.base}")
+    private String backendBaseUrl;
+
+    @Value("${application.frontend.url.base}")
+    private String frontendBaseUrl;
+
     @Value("${admin.mail}")
     private String adminMail;
 
