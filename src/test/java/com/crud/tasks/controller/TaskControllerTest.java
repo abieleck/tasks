@@ -46,7 +46,7 @@ public class TaskControllerTest {
         List<Task> tasks = new ArrayList<>();
         when(dbService.getAllTasks()).thenReturn(tasks);
         //When & Then
-        mockMvc.perform(get("/v1/task").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/tasks").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
     }
@@ -60,9 +60,8 @@ public class TaskControllerTest {
         when(taskMapper.mapToTaskDto(any(Task.class))).thenReturn(taskDto);
 
         //When & Then
-        mockMvc.perform(get("/v1/task")
-                .contentType(MediaType.APPLICATION_JSON)
-                .param("taskId","314"))
+        mockMvc.perform(get("/v1/tasks/314")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(314)))
                 .andExpect(jsonPath("$.title", is("title")))
@@ -74,7 +73,7 @@ public class TaskControllerTest {
     public void shouldCallDeleteMethod() throws Exception {
         //Given
         //When
-        mockMvc.perform(delete("/v1/task").param("taskId", "314"));
+        mockMvc.perform(delete("/v1/tasks/314"));
         //Then
         verify(dbService, times(1)).deleteTask(314L);
     }
@@ -90,7 +89,7 @@ public class TaskControllerTest {
         Gson gson = new Gson();
         String jsonContent = gson.toJson(taskDto);
         //When & Then
-        mockMvc.perform(put("/v1/task")
+        mockMvc.perform(put("/v1/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
@@ -111,7 +110,7 @@ public class TaskControllerTest {
         Gson gson = new Gson();
         String jsonContent = gson.toJson(taskDto);
         //When & Then
-        mockMvc.perform(post("/v1/task")
+        mockMvc.perform(post("/v1/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))

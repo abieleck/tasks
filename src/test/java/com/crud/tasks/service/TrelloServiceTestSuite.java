@@ -4,6 +4,7 @@ import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.domain.Mail;
 import com.crud.tasks.domain.TrelloBoardDto;
 import com.crud.tasks.domain.TrelloCardDto;
+import com.crud.tasks.domain.TrelloListDto;
 import com.crud.tasks.trello.client.CreatedTrelloCardDto;
 import com.crud.tasks.trello.client.TrelloClient;
 import org.junit.Test;
