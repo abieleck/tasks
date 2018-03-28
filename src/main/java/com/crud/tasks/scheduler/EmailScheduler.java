@@ -1,7 +1,6 @@
 package com.crud.tasks.scheduler;
 
 import com.crud.tasks.config.AdminConfig;
-import com.crud.tasks.domain.Mail;
 import com.crud.tasks.repository.TaskRepository;
 import com.crud.tasks.service.SimpleEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +21,9 @@ public class EmailScheduler {
     @Autowired
     private AdminConfig adminConfig;
 
-    @Scheduled(fixedDelay = 3600000) //(cron = "0 0 10 * * *")
+    @Scheduled(cron = "0 0 12 * * ?")
     public void sendInformationEmail() {
         long size = taskRepository.count();
         simpleEmailService.sendTaskCountMessage(adminConfig.getAdminMail(), SUBJECT, size);
-        /*simpleEmailService.sendNewTrelloCardMessage(new Mail(
-                adminConfig.getAdminMail(),
-                null,
-                SUBJECT,
-                "Currently in database you got " + size + ((size == 1) ? "task" : "tasks"))
-        );*/
     }
 }
